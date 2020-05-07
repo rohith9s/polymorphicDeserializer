@@ -50,5 +50,26 @@ Jackson deserialization/serialization works out of the box most of the time. Unl
   ## Problem Statement inspired to dig for solution:
   Lets say we have a requirement to expose an api `/saveEmployee` to persist employee, but let say we have `N` implementations of `Employee` pojo. so we have to expose `N` no. of endpoints to persist employee respectively. Here come's in the Idea of **Polymorphic Deserializer**, using which we will expose only single API to persist different Employee implementations. but it comes with some annotated metadata ` @Subtype` and `@PropertyMatch` in subTypes as shown in above code snippets. 
   
+  ```java
+    /**
+     * Here, we receive request with {@code Employee} or its subTypes
+     * {@code FullTimeEmployee} or {@code PartTimeEmployee}
+     * 
+     * 
+     * @param employee
+     * @return
+     * 
+     * @see com.polymorphicDeserializer.beans.FullTimeEmployee
+     * @see com.polymorphicDeserializer.beans.PartTimeEmployee
+     */
+    @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE,
+      MediaType.APPLICATION_XML_VALUE })
+    public Employee saveEmployee(@RequestBody Employee employee) { // <--- Deserializes to respective model based on received requestObj
+     LOG.info("Received request :" + employee); // 
+
+     return employee;
+    }
+  ``` 
+  
 Thats it, your are now ready to expose polymorphic API's, code is self explanatory, where ever required placed comments to understand.
   
