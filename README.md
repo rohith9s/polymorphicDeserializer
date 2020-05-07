@@ -65,7 +65,7 @@ Jackson deserialization/serialization works out of the box most of the time. Unl
     @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE,
       MediaType.APPLICATION_XML_VALUE })
     public Employee saveEmployee(@RequestBody Employee employee) { // <--- Deserializes to respective model based on received requestObj
-     LOG.info("Received request :" + employee); // 
+     LOG.info("Received request :" + employee); 
 
      return employee;
     }
